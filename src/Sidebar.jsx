@@ -5,8 +5,8 @@ import { createSelector } from "reselect";
 import { connect } from "react-redux";
 
 import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
+
+import SidebarItem from "./SidebarItem";
 
 const extendLearningItem = curry((activeId, learningItem) =>
   produce(learningItem, draft => {
@@ -25,23 +25,16 @@ const learningItemsSelector = createSelector(
 const mapStateToProps = state => ({
   learningItems: learningItemsSelector(state)
 });
-const mapDispatchToProps = dispatch => ({
-  setActive: id => dispatch({ type: "SET_ACTIVE", payload: id })
-});
 
 export const Sidebar = ({ learningItems, setActive }) => {
   console.log("Sidebar render");
   return (
     <List>
       {learningItems.map(li => (
-        <ListItem button key={li.id} selected={li.isActive} onClick={() => setActive(li.id)}>
-          <ListItemText>
-            {li.name} - {li.score}
-          </ListItemText>
-        </ListItem>
+        <SidebarItem learningItem={li} key={li.id} />
       ))}
     </List>
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
+export default connect(mapStateToProps)(Sidebar);
