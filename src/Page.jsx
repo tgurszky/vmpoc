@@ -7,13 +7,23 @@ import { Content } from "./Content";
 import Header from "./Header";
 import { map, curry } from "ramda";
 import produce from "immer";
+import { createSelector } from "reselect";
 
 const extendLearningItem = curry((activeId, learningItem) =>
   produce(learningItem, draft => {
     draft.isActive = draft.id === activeId;
   })
 );
-const learningItemsSelector = state => map(extendLearningItem(state.activeId), state.learningItems);
+
+// const learningItemsSelector = state => map(extendLearningItem(state.activeId), state.learningItems);
+
+const getLearningItems = state => state.learningItems;
+const getActiveId = state => state.activeId;
+
+const learningItemsSelector = createSelector(
+  [getLearningItems, getActiveId],
+  (learningItems, activeId) => map(extendLearningItem(activeId), learningItems)
+);
 
 const mapStateToProps = state => ({
   learningItems: learningItemsSelector(state)
