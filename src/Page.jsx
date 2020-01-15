@@ -16,16 +16,14 @@ const extendLearningItem = curry((activeId, learningItem) =>
 const learningItemsSelector = state => map(extendLearningItem(state.activeId), state.learningItems);
 
 const mapStateToProps = state => ({
-  learningItems: learningItemsSelector(state),
-  title: state.title
+  learningItems: learningItemsSelector(state)
 });
 const mapDispatchToProps = dispatch => ({
   setActive: id => dispatch({ type: "SET_ACTIVE", payload: id }),
-  changeTitle: () => dispatch({ type: "CHANGE_TITLE" }),
   updateScore: id => dispatch({ type: "UPDATE_SCORE", payload: id })
 });
 
-const Page = ({ learningItems, title, setActive, changeTitle, updateScore }) => {
+const Page = ({ learningItems, setActive, updateScore }) => {
   console.log("Page render");
   return (
     <>
