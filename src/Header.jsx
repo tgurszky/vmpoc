@@ -1,7 +1,15 @@
 import React from "react";
 import { Toolbar, AppBar, Typography, Button } from "@material-ui/core";
+import { connect } from "react-redux";
 
-export const Header = ({ title, changeTitle }) => {
+const mapStateToProps = state => ({
+  title: state.title
+});
+const mapDispatchToProps = dispatch => ({
+  changeTitle: () => dispatch({ type: "CHANGE_TITLE" })
+});
+
+const Header = ({ title, changeTitle }) => {
   console.log("Header render");
   return (
     <AppBar position="static">
@@ -16,3 +24,5 @@ export const Header = ({ title, changeTitle }) => {
     </AppBar>
   );
 };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
