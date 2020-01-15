@@ -6,24 +6,22 @@ import produce from "immer";
 
 const defaultState = {
   title: "Re-render tester",
+  activeId: -1,
   learningItems: [
     {
       id: 1,
       name: "First assignment",
-      score: 0,
-      isActive: false
+      score: 0
     },
     {
       id: 2,
       name: "Second assignment",
-      score: 0,
-      isActive: false
+      score: 0
     },
     {
       id: 3,
       name: "Third assignment",
-      score: 0,
-      isActive: false
+      score: 0
     }
   ]
 };
@@ -31,9 +29,7 @@ const defaultState = {
 const reducer = produce((draft, action) => {
   switch (action.type) {
     case "SET_ACTIVE":
-      draft.learningItems.forEach(li => {
-        li.isActive = li.id === action.payload;
-      });
+      draft.activeId = action.payload;
       break;
     case "CHANGE_TITLE":
       draft.title = "New title";
