@@ -17,14 +17,20 @@ const getLearningItem = (state, props) =>
   find(li => li.id === props.learningItemId, state.learningItems);
 const getActiveId = state => state.activeId;
 
-const learningItemSelector = createSelector(
-  [getLearningItem, getActiveId],
-  (learningItem, activeId) => extendLearningItem(activeId, learningItem)
-);
+const makeLearningItemSelector = () =>
+  createSelector([getLearningItem, getActiveId], (learningItem, activeId) =>
+    extendLearningItem(activeId, learningItem)
+  );
 
-const mapStateToProps = (state, props) => ({
-  learningItem: learningItemSelector(state, props)
-});
+const makeMapStateToProps = () => {
+  const learningItemSelector = makeLearningItemSelector();
+
+  const mapStateToProps = (state, props) => ({
+    learningItem: learningItemSelector(state, props)
+  });
+
+  return mapStateToProps;
+};
 
 const mapDispatchToProps = dispatch => ({
   setActive: id => dispatch({ type: "SET_ACTIVE", payload: id })
@@ -41,4 +47,4 @@ export const SidebarItem = ({ learningItemId, learningItem, setActive }) => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SidebarItem);
+export default connect(makeMapStateToProps, mapDispatchToProps)(SidebarItem);
