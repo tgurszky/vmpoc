@@ -10,17 +10,28 @@ const defaultState = {
   learningItems: [
     {
       id: 1,
-      name: "First assignment",
-      score: 0
+      name: "First assignment"
     },
     {
       id: 2,
-      name: "Second assignment",
-      score: 0
+      name: "Second assignment"
     },
     {
       id: 3,
-      name: "Third assignment",
+      name: "Third assignment"
+    }
+  ],
+  results: [
+    {
+      learningItemId: 1,
+      score: 0
+    },
+    {
+      learningItemId: 2,
+      score: 0
+    },
+    {
+      learningItemId: 3,
       score: 0
     }
   ]
@@ -35,9 +46,9 @@ const reducer = produce((draft, action) => {
       draft.title = "New title";
       break;
     case "UPDATE_SCORE":
-      draft.learningItems.forEach(li => {
-        if (li.id === action.payload) {
-          li.score = 100;
+      draft.results.forEach(result => {
+        if (result.learningItemId === action.payload) {
+          result.score = 100;
         }
       });
       break;
